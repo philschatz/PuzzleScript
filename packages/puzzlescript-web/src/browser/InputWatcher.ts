@@ -94,7 +94,7 @@ export default class InputWatcher {
             }
         }
 
-        const makeStickChecker = (whichStick: keyof StickControl<any>) => {
+        const makeStickChecker = (whichStick: keyof StickControl<unknown>) => {
             return () => {
                 const now = Date.now()
                 const interval = (this.repeatIntervalInSeconds || .25) * 1000

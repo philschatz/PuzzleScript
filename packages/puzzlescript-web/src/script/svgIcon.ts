@@ -1,15 +1,15 @@
-import { Cell, CellSaveState, IColor, A11Y_MESSAGE, GameSprite, Soundish, _flatten, Cellish, GameEngineHandler, INPUT_BUTTON, Optional, BaseUI } from 'puzzlescript'
+import { IColor, _flatten, Cellish, GameEngineHandler, Optional, BaseUI } from 'puzzlescript'
 
 export class SvgIconUi extends BaseUI implements GameEngineHandler {
 
     // onGameChange(gameData: GameData) { throw new Error('BUG: Not implemented') }
-    public onPress(dir: INPUT_BUTTON) { throw new Error('BUG: Not implemented') }
-    public onMessage(msg: string): Promise<any> { throw new Error('BUG: Not implemented') }
-    public onLevelLoad(level: number, newLevelSize: Optional<{rows: number, cols: number}>) { /*do nothing*/ }
+    public onPress() { throw new Error('BUG: Not implemented') }
+    public onMessage(): Promise<never> { throw new Error('BUG: Not implemented') }
+    public onLevelLoad() { /*do nothing*/ }
     // onLevelChange(level: number, cells: Optional<Cellish[][]>, message: Optional<string>) { throw new Error('BUG: Not implemented') }
-    public onWin(): Promise<any> { throw new Error('BUG: Not implemented') }
-    public onSound(sound: Soundish): Promise<any> { throw new Error('BUG: Not implemented') }
-    public onTick(changedCells: Set<Cellish>, checkpoint: Optional<CellSaveState>, hasAgain: boolean, a11yMessages: Array<A11Y_MESSAGE<Cell, GameSprite>>) { throw new Error('BUG: Not implemented') }
+    public onWin(): Promise<never> { throw new Error('BUG: Not implemented') }
+    public onSound(): Promise<never> { throw new Error('BUG: Not implemented') }
+    public onTick() { throw new Error('BUG: Not implemented') }
     public onPause() { throw new Error('BUG: Not implemented') }
     public onResume() { throw new Error('BUG: Not implemented') }
 
@@ -38,7 +38,7 @@ export class SvgIconUi extends BaseUI implements GameEngineHandler {
         }
 
         const popularColors = [...colorCount.entries()]
-        .sort(([_A, countA], [_B, countB]) => countB - countA)
+        .sort(([_A, countA], [_B, countB]) => countB - countA) // eslint-disable-line @typescript-eslint/no-unused-vars
         .slice(0, 3)
         .map(([hex]) => hex)
 
@@ -71,15 +71,15 @@ export class SvgIconUi extends BaseUI implements GameEngineHandler {
             this.renderedPixels[y][x] = { hex, chars }
         }
     }
-    protected checkIfCellCanBeDrawnOnScreen(cellStartX: number, cellStartY: number) { return true }
+    protected checkIfCellCanBeDrawnOnScreen() { return true }
     protected getMaxSize() { return { columns: 1000, rows: 1000 } }
-    protected drawCellsAfterRecentering(cells: Iterable<Cellish>, renderScreenDepth: number) {
+    protected drawCellsAfterRecentering(cells: Iterable<Cellish>) {
         for (const cell of cells) {
-            this._drawCell(cell, renderScreenDepth)
+            this._drawCell(cell)
         }
     }
 
-    private _drawCell(cell: Cellish, renderScreenDepth: number = 0) {
+    private _drawCell(cell: Cellish) {
         if (!this.gameData) {
             throw new Error(`BUG: gameData was not set yet`)
         }

@@ -83,7 +83,7 @@ class ListIterator<T> implements Iterator<T> {
         this.listHead = listHead
         this.current = null
     }
-    public next(value?: any) {
+    public next() {
         if (this.listHead) {
             this.current = this.listHead
             this.listHead = null
@@ -189,7 +189,7 @@ export class SortedList<T> implements Iterable<T> {
     }
     public size() {
         let size = 0
-        for (const _item of this) {
+        for (const _item of this) { // eslint-disable-line @typescript-eslint/no-unused-vars
             size++
         }
         return size

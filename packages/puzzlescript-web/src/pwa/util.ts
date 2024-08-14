@@ -24,6 +24,6 @@ export const sendPageview = () => {
 }
 
 export const changePage = (gameId: string, level: number) => {
-    history.replaceState(undefined, undefined as any as string, `#/${gameId}/${level}`)
+    history.replaceState(undefined, undefined as unknown as string, `#/${gameId}/${level}`)
     sendPageview()
 }

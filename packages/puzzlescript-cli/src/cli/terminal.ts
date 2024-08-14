@@ -520,7 +520,7 @@ class TerminalUI extends BaseUI implements GameEngineHandler {
         process.stdout.write(getRestoreCursor())
     }
 
-    private _drawCell(cell: Cellish, renderScreenDepth: number = 0) {
+    private _drawCell(cell: Cellish) {
         const ret: string[] = []
         if (!this.gameData) {
             throw new Error(`BUG: gameData was not set yet`)

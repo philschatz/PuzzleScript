@@ -130,18 +130,18 @@ export default class WebworkerTableEngine implements Engineish {
             this.press(button)
         }
     }
-    private getScreenDimensions(cells: any[][]) {
+    private getScreenDimensions(cells: any[][]) { // eslint-disable-line @typescript-eslint/no-explicit-any
         const { metadata } = this.getGameData()
         return metadata.flickscreen || metadata.zoomscreen || new Dimension(cells[0].length, cells.length)
     }
     private async messageListener({ data }: {data: WorkerResponse}) {
         switch (data.type) {
-            case MESSAGE_TYPE.ON_GAME_CHANGE:
+            case MESSAGE_TYPE.ON_GAME_CHANGE: {
                 const gameData = Serializer.fromJson(JSON.parse(textDecoder.decode(data.payload)) as IGraphJson, '**source not included because of laziness**')
                 this.gameData = gameData
                 this.ui.onGameChange(gameData)
                 break
-            case MESSAGE_TYPE.ON_LEVEL_LOAD:
+            } case MESSAGE_TYPE.ON_LEVEL_LOAD:
                 this.ui.onLevelLoad(data.level, data.levelSize)
                 break
             case MESSAGE_TYPE.ON_LEVEL_CHANGE:

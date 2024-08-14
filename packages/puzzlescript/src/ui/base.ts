@@ -62,7 +62,7 @@ function collapseSpritesToPixels(spritesToDraw: GameSprite[],
     if (anySpriteHasAlpha) {
         spritesToDraw = spritesToDraw.reverse()
         const sprite = spritesToDraw[0].getPixels(spriteHeight, spriteWidth)
-        spritesToDraw.slice(1).forEach((objectToDraw, spriteIndex) => {
+        spritesToDraw.slice(1).forEach((objectToDraw) => {
             if (process.env.NODE_ENV === 'development') {
                 objectToDraw.__incrementCoverage()
             }
@@ -98,7 +98,7 @@ function collapseSpritesToPixels(spritesToDraw: GameSprite[],
         return sprite
     } else {
         const sprite = spritesToDraw[0].getPixels(spriteHeight, spriteWidth)
-        spritesToDraw.slice(1).forEach((objectToDraw, spriteIndex) => {
+        spritesToDraw.slice(1).forEach((objectToDraw) => {
             if (process.env.NODE_ENV === 'development') {
                 objectToDraw.__incrementCoverage()
             }
@@ -218,7 +218,7 @@ abstract class BaseUI {
         this.renderScreen(true)
     }
 
-    public renderMessageScreen(message: string) {
+    public renderMessageScreen() {
         const screenWidth = 34
         const screenHeight = 13
         // re-center the screen so we can show the message

@@ -51,7 +51,7 @@ interface ICliOptions {
 const commander = new Command()
 
 // Use require instead of import so we can load JSON files
-const pkg: IPackage = require(PACKAGE_JSON_PATH) as IPackage // tslint:disable-line:no-var-requires
+const pkg: IPackage = require(PACKAGE_JSON_PATH) as IPackage // eslint-disable-line @typescript-eslint/no-var-requires
 
 
 if (!existsSync(SOLUTION_ROOT)) {
@@ -413,7 +413,7 @@ async function playGame(data: GameData, currentLevelNum: number, recordings: ISa
                 TerminalUI.moveInspector(RULE_DIRECTION.RIGHT)
                 return
             case 'P':
-            case 'p':
+            case 'p': {
                 const players = data.getPlayer().getCellsThatMatch(_flatten(TerminalUI.getCurrentLevelCells()))
                 if (players.size === 1) {
                     TerminalUI.moveInspectorTo([...players][0])
@@ -421,10 +421,11 @@ async function playGame(data: GameData, currentLevelNum: number, recordings: ISa
                     console.log(`There are ${players.size} players. Use tab to select which one`)
                 }
                 return
+            }
             case '\u0003': // Ctrl+C
                 closeSounds()
                 return process.exit(1)
-            case '\u001B': // Escape
+            case '\u001B': { // Escape
                 const coverageFilenameSuffix = `${path.basename(path.dirname(absPath))}-playgame`
                 const codeCoverageObj = saveCoverageFile(data, absPath, (absPath) => path.relative(process.cwd(), absPath))
                 if (existsSync(`coverage`)) {
@@ -440,7 +441,7 @@ async function playGame(data: GameData, currentLevelNum: number, recordings: ISa
                 }
                 shouldExitGame = true
                 return
-            case '1':
+            } case '1':
                 if (process.env.NODE_ENV === 'development') {
                     pendingKey = '[pause]'
                 }
@@ -544,12 +545,9 @@ async function playGame(data: GameData, currentLevelNum: number, recordings: ISa
         // await sleep(Math.max(100 - (Date.now() - startTime), 0))
     }
 
-    while (true) {
+    // Exit the game if the user pressed escape
+    while (!shouldExitGame) {
         let maxSleepTime = process.env.NODE_ENV === 'development' ? 500 : 50
-        // Exit the game if the user pressed escape
-        if (shouldExitGame) {
-            break // so we can detach key listeners
-        }
 
         if (isPaused && !pendingKey) {
             await sleep(maxSleepTime)
@@ -892,7 +890,7 @@ async function promptGame(games: IGameInfo[], cliGameTitle: string | undefined) 
                 if (!input) {
                     filteredGames = games
                 } else {
-                    filteredGames = games.filter(({ id, title, filePath }) => {
+                    filteredGames = games.filter(({ title }) => {
                         return title.toLowerCase().indexOf(input.toLowerCase()) >= 0
                     })
                 }

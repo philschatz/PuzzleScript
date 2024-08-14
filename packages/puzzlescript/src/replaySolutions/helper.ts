@@ -17,7 +17,7 @@ const describeFn = process.env.SKIP_SOLUTIONS ? describe.skip : describe
 const SOLUTION_ROOT = path.join(__dirname, '../../game-solutions/')
 const solutionFiles = fs.readdirSync(SOLUTION_ROOT)
 
-function parseEngine(code: string, levelNum = 0) {
+function parseEngine(code: string) {
     const { data } = Parser.parse(code)
 
     const engine = new GameEngine(data, new EmptyGameEngineHandler())

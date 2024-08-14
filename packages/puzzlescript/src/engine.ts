@@ -353,7 +353,7 @@ export class Level {
         // Skip error checks for performance
         return this.getCells()[rowIndex][colIndex]
     }
-    public replaceSprite(cell: Cell, oldSprite: Optional<GameSprite>, newSprite: Optional<GameSprite>) {
+    public replaceSprite(cell: Cell) {
         // When a new Cell is instantiated it will call this method but `this.cells` is not defined yet
         if (this.cells) {
             // Invalidate the row/column cache. It will be rebuilt when requested
@@ -614,7 +614,7 @@ export class LevelEngine extends EventEmitter2 {
                         case RULE_DIRECTION.UP:
                         case RULE_DIRECTION.DOWN:
                         case RULE_DIRECTION.LEFT:
-                        case RULE_DIRECTION.RIGHT:
+                        case RULE_DIRECTION.RIGHT: {
                             const neighbor = cell.getNeighbor(wantsToMove)
                             // Make sure
                             if (neighbor && !neighbor.hasCollisionWithSprite(sprite)) {
@@ -633,7 +633,7 @@ export class LevelEngine extends EventEmitter2 {
                                 // cell.clearWantsToMove(sprite)
                             }
                             break
-                        default:
+                        } default:
                             throw new Error(`BUG: wantsToMove should have been handled earlier: ${wantsToMove}`)
                     }
                 }

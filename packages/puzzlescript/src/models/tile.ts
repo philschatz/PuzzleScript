@@ -6,8 +6,7 @@ import { CollisionLayer } from './collisionLayer'
 import { IColor } from './colors'
 import { IGameNode } from './game'
 import { SimpleTileWithModifier } from './rule'
-// BitSet does not export a default so import does not work in webpack-built file
-const BitSet2 = require('bitset') // tslint:disable-line:no-var-requires
+import * as BitSet2 from 'bitset'
 
 export type IGameTile = {
     subscribeToCellChanges(t: SimpleTileWithModifier): void
@@ -156,7 +155,7 @@ export abstract class GameSprite extends BaseForLines implements IGameTile {
             t.addCells(this, this, cells, wantsToMove)
         }
     }
-    public updateCells(sprite: GameSprite, cells: Cell[], wantsToMove: RULE_DIRECTION) {
+    public updateCells() {
         throw new Error(`BUG: Unreachable code`)
     }
     public removeCells(sprite: GameSprite, cells: Cell[]) {
@@ -265,7 +264,7 @@ export class GameSpritePixels extends GameSprite {
     public hasPixels() {
         return true
     }
-    public getPixels(spriteHeight: number, spriteWidth: number) {
+    public getPixels() {
         // Make a copy because others may edit it
         return this.pixels.map((row) => {
             return row.map((col) => col)
@@ -458,11 +457,11 @@ export class GameLegendTileSimple extends GameLegendTile {
 }
 
 export class GameLegendTileAnd extends GameLegendTile {
-    public matchesCell(cell: Cell): boolean {
+    public matchesCell(): boolean {
         throw new Error(`BUG: Unreachable code`)
     }
 
-    public getSpritesThatMatch(cell: Cellish): Set<GameSprite> {
+    public getSpritesThatMatch(): Set<GameSprite> {
         // return setIntersection(new Set(this.getSprites()), cell.getSpritesAsSet())
         throw new Error(`BUG: This method should only be called for OR tiles`)
     }

@@ -1,8 +1,7 @@
 import { BitSet } from 'bitset'
 import { GameData } from './models/game'
 import { GameSprite } from './models/tile'
-// BitSet does not export a default so import does not work in webpack-built file
-const BitSet2 = require('bitset') // tslint:disable-line:no-var-requires
+import * as BitSet2 from 'bitset'
 
 abstract class CustomBitSet<T> {
     protected readonly bitSet: BitSet
@@ -82,7 +81,7 @@ export class SpriteBitSet extends CustomBitSet<GameSprite> {
     }
 
     public union(bitSets: Iterable<SpriteBitSet>) {
-        let ret: SpriteBitSet = this // tslint:disable-line:no-this-assignment
+        let ret: SpriteBitSet = this // eslint-disable-line @typescript-eslint/no-this-alias
         for (const bitSet of bitSets) {
             ret = ret.or(bitSet)
         }

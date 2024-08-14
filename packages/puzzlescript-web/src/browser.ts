@@ -3,7 +3,7 @@ import SyncTableEngine from './browser/SyncTableEngine'
 import WebworkerTableEngine from './browser/WebworkerTableEngine'
 
 // Public API
-(window as any).PuzzleScript = {
+(window as any).PuzzleScript = { // eslint-disable-line @typescript-eslint/no-explicit-any
     WebworkerTableEngine,
     SyncTableEngine
 }

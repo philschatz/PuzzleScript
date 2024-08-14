@@ -30,7 +30,7 @@ function toLevel(level: string) {
     }
 }
 
-type LogMessage = (() => any) | any
+type LogMessage = (() => any) | any // eslint-disable-line @typescript-eslint/no-explicit-any
 
 class Logger {
     private readonly currentLevelNum: number

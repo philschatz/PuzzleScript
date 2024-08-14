@@ -125,7 +125,7 @@ export enum SOUND_TYPE {
     SPRITE_EVENT = 'SOUND_SPRITE_EVENT'
 }
 
-export type SfxSoundItem<TileRef> = {
+export type SfxSoundItem = {
     type: SOUND_TYPE.SFX
     soundEffect: string
 }
