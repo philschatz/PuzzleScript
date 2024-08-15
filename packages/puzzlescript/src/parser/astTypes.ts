@@ -145,7 +145,7 @@ export type SoundItem<TileRef> = IASTNode & Soundish & ({
     type: SOUND_TYPE.SPRITE_EVENT
     sprite: TileRef
     spriteEvent: SOUND_SPRITE_EVENT
-} | SfxSoundItem<TileRef>)
+} | SfxSoundItem)
 
 export type CollisionLayer<TileRef> = IASTNode & {
     type: 'COLLISION_LAYER'

@@ -10,7 +10,7 @@ import { BaseForLines, IGameCode } from './BaseForLines'
 import { CollisionLayer } from './collisionLayer'
 import { IGameNode } from './game'
 import { GameSprite, IGameTile } from './tile'
-import * as BitSet2 from 'bitset'
+import BitSet2 from 'bitset'
 
 const MAX_ITERATIONS_IN_LOOP = 350 // Set by the Random World Generation game
 const LRU_CACHE_SIZE = 100 // 1000
@@ -983,8 +983,8 @@ export class SimpleBracket extends ISimpleBracket {
                 // if (process.stdout) { TerminalUI.debugRenderScreen() } debugger // eslint-disable-line no-debugger
             }
             this.firstCells.delete(firstCell)
-            for (const [ellipsisBracket, token] of this.ellipsisBracketListeners) {
-                ellipsisBracket.removeFirstCell(this, firstCell, token)
+            for (const [ellipsisBracket] of this.ellipsisBracketListeners) {
+                ellipsisBracket.removeFirstCell(this, firstCell)
             }
         }
     }
@@ -1946,7 +1946,7 @@ export class SimpleNeighbor extends BaseForLines implements ICacheable {
     }
 
     public matchesCellSimple(cell: Cell) {
-        return this.matchesCell(cell, null, null)
+        return this.matchesCell(cell)
     }
 
     public addCells(t: SimpleTileWithModifier, sprite: GameSprite, cells: Iterable<Cell>, wantsToMove: Optional<RULE_DIRECTION>) {

@@ -1,7 +1,7 @@
 import { BitSet } from 'bitset'
 import { GameData } from './models/game'
 import { GameSprite } from './models/tile'
-import * as BitSet2 from 'bitset'
+import BitSet2 from 'bitset'
 
 abstract class CustomBitSet<T> {
     protected readonly bitSet: BitSet

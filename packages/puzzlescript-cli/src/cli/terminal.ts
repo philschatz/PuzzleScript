@@ -479,10 +479,10 @@ class TerminalUI extends BaseUI implements GameEngineHandler {
         return ret.join('')
     }
 
-    protected drawCellsAfterRecentering(cells: Iterable<Cellish>, renderScreenDepth: number) {
+    protected drawCellsAfterRecentering(cells: Iterable<Cellish>) {
         const ret = []
         for (const cell of cells) {
-            const instructions = this._drawCell(cell, renderScreenDepth)
+            const instructions = this._drawCell(cell)
             if (instructions) {
                 ret.push(instructions)
             }

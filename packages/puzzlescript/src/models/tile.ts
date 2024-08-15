@@ -6,7 +6,7 @@ import { CollisionLayer } from './collisionLayer'
 import { IColor } from './colors'
 import { IGameNode } from './game'
 import { SimpleTileWithModifier } from './rule'
-import * as BitSet2 from 'bitset'
+import BitSet2 from 'bitset'
 
 export type IGameTile = {
     subscribeToCellChanges(t: SimpleTileWithModifier): void

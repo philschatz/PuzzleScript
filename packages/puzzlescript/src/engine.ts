@@ -273,8 +273,8 @@ export class Cell implements Cellish {
         this.addSprites(spritesToAdd)
     }
     // This method is replaced by LetterCells (because they are not boud to a level)
-    protected replaceSpriteInLevel(cellSprite: Optional<GameSprite>, newSprite: GameSprite) {
-        this.getLevel().replaceSprite(this, cellSprite, newSprite)
+    protected replaceSpriteInLevel(cellSprite: Optional<GameSprite>, newSprite: GameSprite) { //eslint-disable-line @typescript-eslint/no-unused-vars
+        this.getLevel().replaceSprite(this)
     }
     private _setState(collisionLayer: CollisionLayer, sprite: Optional<GameSprite>, wantsToMove: Optional<RULE_DIRECTION>) {
         let needsToUpdateCache

@@ -218,7 +218,7 @@ abstract class BaseUI {
         this.renderScreen(true)
     }
 
-    public renderMessageScreen() {
+    public renderMessageScreen(message: string) { //eslint-disable-line @typescript-eslint/no-unused-vars
         const screenWidth = 34
         const screenHeight = 13
         // re-center the screen so we can show the message
