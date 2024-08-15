@@ -1,5 +1,5 @@
-const {RNG} = require('./rng')
-const {MakeRiff} = require('./riffwave')
+const {RNG} = require('./rng') // eslint-disable-line @typescript-eslint/no-require-imports
+const {MakeRiff} = require('./riffwave') // eslint-disable-line @typescript-eslint/no-require-imports
 var SOUND_VOL = 0.25;
 var SAMPLE_RATE = 5512;
 var BIT_DEPTH = 8;
@@ -573,19 +573,6 @@ random,
 birdSound
 ];
 
-var generatorNames = [
-'pickupCoin',
-'laserShoot',
-'explosion',
-'powerUp',
-'hitHurt',
-'jump',
-'blipSelect',
-'pushSound',
-'random',
-'birdSound'
-];
-
 /*
 i like 9675111
 */
@@ -699,13 +686,13 @@ window.console.log(psstring);*/
     arp_limit = Math.floor(Math.pow(1.0 - ps.p_arp_speed, 2.0) * 20000 + 32);
     if (ps.p_arp_speed == 1.0)
       arp_limit = 0;
-  };
+  }
 
   var rep_time;
   var fperiod, period, fmaxperiod;
   var fslide, fdslide;
   var square_duty, square_slide;
-  var arp_mod, arp_time, arp_limit;
+  var arp_mod, arp_limit;
   repeat();  // First time through, this is a bit of a misnomer
 
   // Filter
@@ -763,8 +750,6 @@ window.console.log(psstring);*/
   var gain = 2.0 * ps.sound_vol;
   var gain = Math.exp(ps.sound_vol) - 1;
 
-  var num_clipped = 0;
-
   // ...end of initialization. Generate samples.
 
   var sample_sum = 0;
@@ -773,7 +758,6 @@ window.console.log(psstring);*/
 
   var buffer_i = 0;
   var buffer_length = Math.ceil(env_total_length / summands);
-  var buffer_complete = false;
 
   var sound;
   if (ps.sample_rate < SoundEffect.MIN_SAMPLE_RATE) {
@@ -801,8 +785,6 @@ window.console.log(psstring);*/
     fperiod *= fslide;
     if (fperiod > fmaxperiod) {
       fperiod = fmaxperiod;
-      if (ps.p_freq_limit > 0.0)
-        buffer_complete = true;
     }
 
     // Vibrato

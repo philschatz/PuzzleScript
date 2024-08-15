@@ -110,7 +110,7 @@ export default class WebworkerTableEngine implements Engineish {
 
     public pause() {
         this.worker.postMessage({ type: MESSAGE_TYPE.PAUSE })
-        this.inputInterval && clearInterval(this.inputInterval)
+        clearInterval(this.inputInterval)
         this.inputInterval = 0
     }
 
@@ -130,18 +130,18 @@ export default class WebworkerTableEngine implements Engineish {
             this.press(button)
         }
     }
-    private getScreenDimensions(cells: any[][]) {
+    private getScreenDimensions(cells: any[][]) { // eslint-disable-line @typescript-eslint/no-explicit-any
         const { metadata } = this.getGameData()
         return metadata.flickscreen || metadata.zoomscreen || new Dimension(cells[0].length, cells.length)
     }
     private async messageListener({ data }: {data: WorkerResponse}) {
         switch (data.type) {
-            case MESSAGE_TYPE.ON_GAME_CHANGE:
+            case MESSAGE_TYPE.ON_GAME_CHANGE: {
                 const gameData = Serializer.fromJson(JSON.parse(textDecoder.decode(data.payload)) as IGraphJson, '**source not included because of laziness**')
                 this.gameData = gameData
                 this.ui.onGameChange(gameData)
                 break
-            case MESSAGE_TYPE.ON_LEVEL_LOAD:
+            } case MESSAGE_TYPE.ON_LEVEL_LOAD:
                 this.ui.onLevelLoad(data.level, data.levelSize)
                 break
             case MESSAGE_TYPE.ON_LEVEL_CHANGE:
@@ -242,7 +242,7 @@ export default class WebworkerTableEngine implements Engineish {
         if (!this.isCurrentLevelAMessage()) {
             this.table.setAttribute('style', `width: ${width}px`)
             // to fix chrome vertical lines because of fractional pixels
-            this.table.parentElement && this.table.parentElement.setAttribute('style', `left: ${left}px; /*chrome display quirk with fractional pixels*/`)
+            this.table.parentElement?.setAttribute('style', `left: ${left}px; /*chrome display quirk with fractional pixels*/`)
             document.body.setAttribute('data-ps-game-limited-by', limitedBy)
         }
     }

@@ -62,7 +62,7 @@ function collapseSpritesToPixels(spritesToDraw: GameSprite[],
     if (anySpriteHasAlpha) {
         spritesToDraw = spritesToDraw.reverse()
         const sprite = spritesToDraw[0].getPixels(spriteHeight, spriteWidth)
-        spritesToDraw.slice(1).forEach((objectToDraw, spriteIndex) => {
+        spritesToDraw.slice(1).forEach((objectToDraw) => {
             if (process.env.NODE_ENV === 'development') {
                 objectToDraw.__incrementCoverage()
             }
@@ -98,7 +98,7 @@ function collapseSpritesToPixels(spritesToDraw: GameSprite[],
         return sprite
     } else {
         const sprite = spritesToDraw[0].getPixels(spriteHeight, spriteWidth)
-        spritesToDraw.slice(1).forEach((objectToDraw, spriteIndex) => {
+        spritesToDraw.slice(1).forEach((objectToDraw) => {
             if (process.env.NODE_ENV === 'development') {
                 objectToDraw.__incrementCoverage()
             }
@@ -218,7 +218,7 @@ abstract class BaseUI {
         this.renderScreen(true)
     }
 
-    public renderMessageScreen(message: string) {
+    public renderMessageScreen(message: string) { //eslint-disable-line @typescript-eslint/no-unused-vars
         const screenWidth = 34
         const screenHeight = 13
         // re-center the screen so we can show the message
@@ -403,8 +403,6 @@ abstract class BaseUI {
 
     protected abstract setPixel(x: number, y: number, hex: string, fgHex: Optional<string>, chars: string): void
 
-    protected abstract checkIfCellCanBeDrawnOnScreen(cellStartX: number, cellStartY: number): boolean
-
     protected cellPosToXY(cell: Cellish) {
         const { colIndex, rowIndex } = cell
         let isOnScreen = true // can be set to false for many reasons
@@ -422,10 +420,6 @@ abstract class BaseUI {
         }
         cellStartX = (colIndex - this.windowOffsetColStart) * this.SPRITE_WIDTH
         cellStartY = (rowIndex - this.windowOffsetRowStart) * this.SPRITE_HEIGHT /*pixels*/
-
-        if (isOnScreen) {
-            isOnScreen = this.checkIfCellCanBeDrawnOnScreen(cellStartX, cellStartY)
-        }
 
         if (cellStartX < 0 || cellStartY < 0) {
             isOnScreen = false

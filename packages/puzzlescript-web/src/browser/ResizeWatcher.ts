@@ -10,7 +10,7 @@ export type ResizeHandler = (width: number, left: number, limitedBy: LIMITED_BY)
 export default class ResizeWatcher {
     private readonly table: HTMLTableElement
     private readonly handler: ResizeHandler
-    private readonly boundResizeHandler: any
+    private readonly boundResizeHandler: typeof this.trigger
     private columns: number
     private rows: number
 

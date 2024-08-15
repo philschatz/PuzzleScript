@@ -83,16 +83,16 @@ type SoundId = string
 // type ActionMutationsId = string
 // type BracketPairId = string
 
-interface ISourceNode {
+type ISourceNode = {
     _sourceOffset: number
 }
 
-interface IGraphSprite extends ISourceNode {
+type IGraphSprite = {
     name: string,
     pixels: Array<Array<Optional<ColorId>>>,
     collisionLayer: CollisionId,
     // sounds: {}
-}
+} & ISourceNode
 
 enum TILE_TYPE {
     OR = 'OR',
@@ -128,7 +128,7 @@ type GraphTile = ISourceNode & ({
 //     commands: CommandId[]
 // }
 
-interface IGraphGameMetadata {
+type IGraphGameMetadata = {
     author: Optional<string>
     homepage: Optional<string>
     youtube: Optional<string>
@@ -177,7 +177,7 @@ class MapWithId<T, TJson> {
     public get(key: T) {
         const value = this.jsonMap.get(key)
         if (!value) {
-            debugger; throw new Error(`BUG: Element has not been added to the set`) // tslint:disable-line:no-debugger
+            debugger; throw new Error(`BUG: Element has not been added to the set`) // eslint-disable-line no-debugger
         }
         return value
     }
@@ -185,7 +185,7 @@ class MapWithId<T, TJson> {
     public getId(key: T) {
         const value = this.idMap.get(key)
         if (!value) {
-            debugger; throw new Error(`BUG: Element has not been added to the set`) // tslint:disable-line:no-debugger
+            debugger; throw new Error(`BUG: Element has not been added to the set`) // eslint-disable-line no-debugger
         }
         return value
     }
@@ -195,7 +195,7 @@ class MapWithId<T, TJson> {
         for (const [obj, id] of this.idMap) {
             const json = this.jsonMap.get(obj)
             if (!json) {
-                debugger; throw new Error(`BUG: Could not find matching json representation for "${id}"`) // tslint:disable-line:no-debugger
+                debugger; throw new Error(`BUG: Could not find matching json representation for "${id}"`) // eslint-disable-line no-debugger
             }
             ret[id] = json
         }
@@ -420,10 +420,11 @@ export default class Serializer {
                         metadata._setValue(key, colorMap.get(val as string))
                         break
                     case 'zoomScreen':
-                    case 'flickScreen':
-                        const { width, height } = val
+                    case 'flickScreen': {
+                        const { width, height } = val as unknown as Dimension
                         metadata._setValue(key, new Dimension(width, height))
                         break
+                    }
                     default:
                         metadata._setValue(key, val)
                 }
@@ -571,7 +572,7 @@ export default class Serializer {
             case ast.LEVEL_TYPE.MESSAGE:
                 return level
             default:
-                debugger; throw new Error(`BUG: Unsupported level subtype`) // tslint:disable-line:no-debugger
+                debugger; throw new Error(`BUG: Unsupported level subtype`) // eslint-disable-line no-debugger
         }
     }
     private recBuildRule(rule: IRule): string {
@@ -606,7 +607,7 @@ export default class Serializer {
             }
             return this.ruleMap.set(rule, x)
         } else {
-            debugger; throw new Error(`BUG: Unsupported rule type`) // tslint:disable-line:no-debugger
+            debugger; throw new Error(`BUG: Unsupported rule type`) // eslint-disable-line no-debugger
         }
 
     }
@@ -622,7 +623,7 @@ export default class Serializer {
             case ast.COMMAND_TYPE.WIN:
                 return this.commandMap.set(command, command)
             default:
-                debugger; throw new Error(`BUG: Unsupoprted command type`) // tslint:disable-line:no-debugger
+                debugger; throw new Error(`BUG: Unsupoprted command type`) // eslint-disable-line no-debugger
         }
     }
     private buildConditionBracket(bracket: ISimpleBracket): BracketId {
@@ -647,7 +648,7 @@ export default class Serializer {
                 debugFlag: bracket.debugFlag
             })
         } else {
-            debugger; throw new Error(`BUG: Unsupported bracket type`) // tslint:disable-line:no-debugger
+            debugger; throw new Error(`BUG: Unsupported bracket type`) // eslint-disable-line no-debugger
         }
     }
     private buildNeighbor(neighbor: SimpleNeighbor): NeighborId {
@@ -701,7 +702,7 @@ export default class Serializer {
                 _sourceOffset: tile.__source.sourceOffset
             })
         } else {
-            debugger; throw new Error(`BUG: Invalid tile type`) // tslint:disable-line:no-debugger
+            debugger; throw new Error(`BUG: Invalid tile type`) // eslint-disable-line no-debugger
         }
     }
     private buildSprite(sprite: GameSprite): SpriteId {
@@ -737,7 +738,7 @@ export default class Serializer {
     }
 }
 
-export interface IGraphJson {
+export type IGraphJson = {
     version: number,
     title: string,
     metadata: IGraphGameMetadata,

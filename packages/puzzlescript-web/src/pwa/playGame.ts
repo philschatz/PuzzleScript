@@ -22,7 +22,7 @@ export interface StorageGameInfo {
 interface Storage { [gameId: string]: StorageGameInfo }
 
 export interface Dialog extends HTMLDialogElement {
-    open: Optional<boolean>
+    open: boolean
     show(): void
     showModal(): void
     close(returnValue?: string): void
@@ -354,7 +354,7 @@ setUi(true)
 
 export function runMigrations() {
     const storage = currentInfo.loadStorage()
-    const storageVersion = storage as any as { _version: number }
+    const storageVersion = storage as unknown as { _version: number }
     if (storageVersion._version === 1) {
         const gameMigration = new Map<string, string>()
         gameMigration.set('gist-f0b9b8e95d0bc87c9fb9e411756daa23', 'icecrates')

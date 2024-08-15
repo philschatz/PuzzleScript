@@ -2289,7 +2289,7 @@ describe('engine', () => {
         expect(engine.getCurrentLevel().getCells()[0][2].getSpritesAsSet().has(dot)).toBe(true) // the dot appeared
 
         // Verify that the bracket no longer has any matches (since things are no longer moving bc the tick is done)
-        expect((engine.gameData.rules[1].getChildRules()[0] as any).conditionBrackets[0].firstCells.size).toBe(0)
+        expect((engine.gameData.rules[1].getChildRules()[0] as any).conditionBrackets[0].firstCells.size).toBe(0) // eslint-disable-line @typescript-eslint/no-explicit-any
 
         engine.press(INPUT_BUTTON.UNDO)
         engine.tick()

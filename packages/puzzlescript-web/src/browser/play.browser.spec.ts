@@ -2,12 +2,12 @@
 /* eslint-env jasmine */
 import fs from 'fs'
 import path from 'path'
-import puppeteer, { KeyInput } from 'puppeteer' // tslint:disable-line:no-implicit-dependencies
+import { EvaluateFunc, KeyInput, Page } from 'puppeteer'
 import { browserAfterEach, browserBeforeEach, getUrl } from './browserSpecUtils'
 // import mapStackTrace from 'sourcemapped-stacktrace-node')
 
 // Defined via jest-puppeteer environment
-declare var page: puppeteer.Page
+declare let page: Page
 
 async function sleep(ms: number) {
     return new Promise((resolve) => setTimeout(resolve, ms))
@@ -99,7 +99,7 @@ async function pressKeys(keys: string[], isLastPressADialog: boolean) {
     }
 }
 
-async function evaluateWithStackTrace(fn: puppeteer.EvaluateFn, ...args: any[]) {
+async function evaluateWithStackTrace(fn: EvaluateFunc<{ source: string, startLevel: number }[]>, ...args: any[]) { // eslint-disable-line @typescript-eslint/no-explicit-any
     // try {
     return page.evaluate(fn, ...args)
     // } catch (e) {
@@ -117,9 +117,9 @@ async function playLevel() {
     const startLevel = 3
 
     await evaluateWithStackTrace(({ source, startLevel }) => { // tslint:disable-line:no-shadowed-variable
-        if ((window as any).HackTableStart) {
+        if ((window as any).HackTableStart) { // eslint-disable-line @typescript-eslint/no-explicit-any
             if (source && typeof startLevel === 'number') {
-                (window as any).HackTableStart(source, startLevel)
+                (window as any).HackTableStart(source, startLevel) // eslint-disable-line @typescript-eslint/no-explicit-any
             } else {
                 throw new Error(`BUG: Source was not a string or startLevel was not a number`)
             }

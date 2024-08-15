@@ -10,7 +10,7 @@ import { BaseForLines, IGameCode } from './BaseForLines'
 import { CollisionLayer } from './collisionLayer'
 import { IGameNode } from './game'
 import { GameSprite, IGameTile } from './tile'
-const BitSet2 = require('bitset') // tslint:disable-line:no-var-requires
+import BitSet2 from 'bitset'
 
 const MAX_ITERATIONS_IN_LOOP = 350 // Set by the Random World Generation game
 const LRU_CACHE_SIZE = 100 // 1000
@@ -39,7 +39,7 @@ class ExtraPair<A> extends BracketPair<A> {
     }
 }
 
-export interface IRule extends IGameNode {
+export type IRule = {
     hasMatches: (level: Level) => boolean
     evaluate: (level: Level, onlyEvaluateFirstMatch: boolean) => IMutation[]
     getChildRules: () => IRule[]
@@ -53,9 +53,9 @@ export interface IRule extends IGameNode {
     a11yGetConditionSprites(): Array<Set<GameSprite>>
     toKey(): string
 
-}
+} & IGameNode
 
-export interface IMutation {
+export type IMutation = {
     messages: Array<A11Y_MESSAGE<Cell, GameSprite>>
     hasCell: () => boolean
     getCell: () => Cell
@@ -155,7 +155,7 @@ export class SimpleRuleGroup extends BaseForLines implements IRule {
                 // so that we can step through the evaluations.
                 logger.warn(this.toString())
                 logger.warn('BUG: Iterated too many times in startloop or + (rule group)')
-                // if (process.stdout) { TerminalUI.debugRenderScreen() } debugger // tslint:disable-line:no-debugger
+                // if (process.stdout) { TerminalUI.debugRenderScreen() } debugger // eslint-disable-line no-debugger
             }
             if (iteration === MAX_ITERATIONS_IN_LOOP - 1) {
                 throw new Error(`BUG: Iterated too many times in startloop or + (rule group)\n${this.toString()}`)
@@ -364,7 +364,7 @@ export class SimpleRule extends BaseForLines implements ICacheable, IRule {
             //     // TerminalUI.renderScreen(false)
             // }
             if (this.debugFlag === DEBUG_FLAG.BREAKPOINT) {
-                debugger // tslint:disable-line:no-debugger
+                debugger // eslint-disable-line no-debugger
             }
         }
 
@@ -539,7 +539,7 @@ export class SimpleTileWithModifier extends BaseForLines implements ICacheable {
     public addCells(tile: IGameTile, sprite: GameSprite, cells: Cell[], wantsToMove: Optional<RULE_DIRECTION>) {
         if (process.env.NODE_ENV === 'development' && this._debugFlag === DEBUG_FLAG.BREAKPOINT) {
             // Pause here because it was marked in the code
-            // if (process.stdout) { TerminalUI.debugRenderScreen() } debugger // tslint:disable-line:no-debugger
+            // if (process.stdout) { TerminalUI.debugRenderScreen() } debugger // eslint-disable-line no-debugger
         }
         // Cells all have the same sprites, so if the 1st matches, they all do.
         // Also, we only need to check that the direction matches (optimization),
@@ -579,7 +579,7 @@ export class SimpleTileWithModifier extends BaseForLines implements ICacheable {
     public updateCells(sprite: GameSprite, cells: Cell[], wantsToMove: Optional<RULE_DIRECTION>) {
         if (process.env.NODE_ENV === 'development' && this._debugFlag === DEBUG_FLAG.BREAKPOINT) {
             // Pause here because it was marked in the code
-            // if (process.stdout) { TerminalUI.debugRenderScreen() } debugger // tslint:disable-line:no-debugger
+            // if (process.stdout) { TerminalUI.debugRenderScreen() } debugger // eslint-disable-line no-debugger
         }
         // Cells all have the same sprites, so if the 1st matches, they all do
         if (this.matchesFirstCell(cells, wantsToMove)) {
@@ -603,7 +603,7 @@ export class SimpleTileWithModifier extends BaseForLines implements ICacheable {
     public removeCells(tile: IGameTile, sprite: GameSprite, cells: Cell[]) {
         if (process.env.NODE_ENV === 'development' && this._debugFlag === DEBUG_FLAG.BREAKPOINT_REMOVE) {
             // Pause here because it was marked in the code
-            // if (process.stdout) { TerminalUI.debugRenderScreen() } debugger // tslint:disable-line:no-debugger
+            // if (process.stdout) { TerminalUI.debugRenderScreen() } debugger // eslint-disable-line no-debugger
         }
         // Cells all have the same sprites, so if the 1st matches, they all do
         // OR Tiles need to be checked to see if the tile still matches.
@@ -690,7 +690,7 @@ export abstract class ISimpleBracket extends BaseForLines implements ICacheable 
 
 }
 
-interface IMatchedCellAndCorrespondingNeighbors {
+type IMatchedCellAndCorrespondingNeighbors = {
     cell: Cell,
     condition: SimpleNeighbor,
     action: Optional<SimpleNeighbor>
@@ -838,15 +838,15 @@ export class SimpleBracket extends ISimpleBracket {
     public _addFirstCell(firstCell: Cell) {
         if (process.env.NODE_ENV === 'development' && this.debugFlag === DEBUG_FLAG.BREAKPOINT) {
             // Pausing here because it was marked in the code
-            // if (process.stdout) { TerminalUI.debugRenderScreen() } debugger // tslint:disable-line:no-debugger
+            // if (process.stdout) { TerminalUI.debugRenderScreen() } debugger // eslint-disable-line no-debugger
         }
         this.firstCells.add(firstCell)
-        for (const [ellipsisBracket, token] of this.ellipsisBracketListeners) {
-            ellipsisBracket.addFirstCell(this, firstCell, token)
+        for (const [ellipsisBracket] of this.ellipsisBracketListeners) {
+            ellipsisBracket.addFirstCell()
         }
     }
 
-    public addCell(index: number, neighbor: SimpleNeighbor, t: SimpleTileWithModifier, sprite: GameSprite, cell: Cell, wantsToMove: Optional<RULE_DIRECTION>) {
+    public addCell(index: number, neighbor: SimpleNeighbor, t: SimpleTileWithModifier, sprite: GameSprite, cell: Cell) {
         // check if downstream neighbors match
         if (!this.matchesDownstream(cell, index)) {
             // Try to remove the match if there is one
@@ -940,7 +940,7 @@ export class SimpleBracket extends ISimpleBracket {
     public getMatches(level: Level, actionBracket: Optional<SimpleBracket>) {
         if (process.env.NODE_ENV === 'development' && this.debugFlag === DEBUG_FLAG.BREAKPOINT) {
             // A "DEBUGGER" flag was set in the game so we are pausing here
-            // if (process.stdout) { TerminalUI.debugRenderScreen() } debugger // tslint:disable-line:no-debugger
+            // if (process.stdout) { TerminalUI.debugRenderScreen() } debugger // eslint-disable-line no-debugger
         }
 
         let matches
@@ -950,7 +950,7 @@ export class SimpleBracket extends ISimpleBracket {
             if (process.env.VERIFY_MATCHES) {
                 const loopingMatches = this.getMatchesByLooping(level, actionBracket)
                 if (matches.length !== loopingMatches.length) {
-                    debugger // tslint:disable-line:no-debugger
+                    debugger // eslint-disable-line no-debugger
                     this.getMatchesByTrickling(level, actionBracket) // run again so we can step through
                     this.getMatchesByLooping(level, actionBracket) // run again so we can step through
                     throw new Error(`Match lengths differ. Expected ${loopingMatches.length} but found ${matches.length}. \n${this.toString()}`)
@@ -980,11 +980,11 @@ export class SimpleBracket extends ISimpleBracket {
         if (this.firstCells.has(firstCell)) {
             if (process.env.NODE_ENV === 'development' && this.debugFlag === DEBUG_FLAG.BREAKPOINT_REMOVE) {
                 // Pausing here because it was marked in the code
-                // if (process.stdout) { TerminalUI.debugRenderScreen() } debugger // tslint:disable-line:no-debugger
+                // if (process.stdout) { TerminalUI.debugRenderScreen() } debugger // eslint-disable-line no-debugger
             }
             this.firstCells.delete(firstCell)
-            for (const [ellipsisBracket, token] of this.ellipsisBracketListeners) {
-                ellipsisBracket.removeFirstCell(this, firstCell, token)
+            for (const [ellipsisBracket] of this.ellipsisBracketListeners) {
+                ellipsisBracket.removeFirstCell(this, firstCell)
             }
         }
     }
@@ -1216,14 +1216,14 @@ export class SimpleEllipsisBracket extends ISimpleBracket {
         this.afterEllipsisBracket.addCellsToEmptyRules(cells)
     }
 
-    public addCell(index: number, neighbor: SimpleNeighbor, t: SimpleTileWithModifier, sprite: GameSprite, cell: Cell, wantsToMove: Optional<RULE_DIRECTION>) {
+    public addCell() {
         throw new Error(`BUG: We should not be subscribed to these events`)
     }
-    public removeCell(index: number, neighbor: SimpleNeighbor, t: SimpleTileWithModifier, sprite: GameSprite, cell: Cell) {
+    public removeCell() {
         throw new Error(`BUG: We should not be subscribed to these events`)
     }
 
-    public addFirstCell(bracket: SimpleBracket, firstCell: Cell, token: BEFORE_OR_AFTER) {
+    public addFirstCell() {
         // // check to see if the new cell is in line with any firstCells in the other bracket. If so, we have a match!
         // let firstBeforeCells
         // let firstAfterCells
@@ -1256,7 +1256,7 @@ export class SimpleEllipsisBracket extends ISimpleBracket {
         //     }
         // }
     }
-    public removeFirstCell(bracket: SimpleBracket, firstCell: Cell, token: BEFORE_OR_AFTER) {
+    public removeFirstCell(bracket: SimpleBracket, firstCell: Cell) {
         // Figure out the 1st cell for us and remove it (by maybe looking at the matching bracket)
         this.checkInvariants()
         if (bracket === this.beforeEllipsisBracket) {
@@ -1706,7 +1706,7 @@ export class SimpleNeighbor extends BaseForLines implements ICacheable {
     public prepareAction(actionNeighbor: SimpleNeighbor) {
         if (process.env.NODE_ENV === 'development' && actionNeighbor.debugFlag === DEBUG_FLAG.BREAKPOINT) {
             // Pausing here because this breakpoint was marked in the game code
-            debugger // tslint:disable-line:no-debugger
+            debugger // eslint-disable-line no-debugger
         }
 
         if (this.staticCache.has(actionNeighbor)) {
@@ -1880,7 +1880,7 @@ export class SimpleNeighbor extends BaseForLines implements ICacheable {
     public evaluate(actionNeighbor: SimpleNeighbor, cell: Cell, magicOrTiles: Map<IGameTile, Set<GameSprite>>) {
         if (process.env.NODE_ENV === 'development' && actionNeighbor.debugFlag === DEBUG_FLAG.BREAKPOINT) {
             // Pausing here because this breakpoint was marked in the game code
-            // if (process.stdout) { TerminalUI.debugRenderScreen() } debugger // tslint:disable-line:no-debugger
+            // if (process.stdout) { TerminalUI.debugRenderScreen() } debugger // eslint-disable-line no-debugger
         }
 
         const r = this.staticCache.get(actionNeighbor)
@@ -1946,13 +1946,13 @@ export class SimpleNeighbor extends BaseForLines implements ICacheable {
     }
 
     public matchesCellSimple(cell: Cell) {
-        return this.matchesCell(cell, null, null)
+        return this.matchesCell(cell)
     }
 
     public addCells(t: SimpleTileWithModifier, sprite: GameSprite, cells: Iterable<Cell>, wantsToMove: Optional<RULE_DIRECTION>) {
         if (process.env.NODE_ENV === 'development' && this.debugFlag === DEBUG_FLAG.BREAKPOINT) {
             // Pausing here because it was marked in the code
-            // if (process.stdout) { TerminalUI.debugRenderScreen() } debugger // tslint:disable-line:no-debugger
+            // if (process.stdout) { TerminalUI.debugRenderScreen() } debugger // eslint-disable-line no-debugger
         }
         for (const cell of cells) {
             if (this.matchesTiles(cell)) {
@@ -1973,7 +1973,7 @@ export class SimpleNeighbor extends BaseForLines implements ICacheable {
     public removeCells(t: SimpleTileWithModifier, sprite: GameSprite, cells: Iterable<Cell>) {
         if (process.env.NODE_ENV === 'development' && this.debugFlag === DEBUG_FLAG.BREAKPOINT_REMOVE) {
             // Pausing here because it was marked in the code
-            // if (process.stdout) { TerminalUI.debugRenderScreen() } debugger // tslint:disable-line:no-debugger
+            // if (process.stdout) { TerminalUI.debugRenderScreen() } debugger // eslint-disable-line no-debugger
         }
         for (const cell of cells) {
             // Check if the cell still matches. If not, remove it from upstream
@@ -2048,7 +2048,7 @@ export class SimpleNeighbor extends BaseForLines implements ICacheable {
         }
         return true
     }
-    private matchesCell(cell: Cell, tileWithModifier: Optional<SimpleTileWithModifier>, wantsToMove: Optional<RULE_DIRECTION>) {
+    private matchesCell(cell: Cell) {
 
         return this.lruCache.get(`[${cell.toKey()}]`, () =>
             this.check1(cell) &&

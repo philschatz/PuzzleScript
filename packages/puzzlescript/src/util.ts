@@ -74,8 +74,8 @@ export function _flatten<T>(arrays: T[][]) {
 //     return dest
 // }
 
-export function _debounce(callback: () => any) {
-    let timeout: any// NodeJS.Timer
+export function _debounce(callback: () => void) {
+    let timeout: NodeJS.Timeout
     return () => {
         if (timeout) {
             clearTimeout(timeout)
@@ -197,7 +197,7 @@ export enum DEBUG_FLAG {
     BREAKPOINT_REMOVE = 'DEBUGGER_REMOVE'
 }
 
-export interface ICacheable {
+export type ICacheable = {
     toKey: () => string
 }
 
@@ -260,9 +260,9 @@ export function pollingPromise<T>(ms: number, fn: () => T) {
     })
 }
 
-export interface TypedMessageEvent<T> extends MessageEvent {
+export type TypedMessageEvent<T> = {
     data: T
-}
+} & MessageEvent
 
 export enum MESSAGE_TYPE {
     PAUSE = 'PAUSE',
@@ -284,13 +284,13 @@ export enum MESSAGE_TYPE {
     ON_RESUME = 'ON_RESUME'
 }
 
-export interface CellishJson {
+export type CellishJson = {
     colIndex: number,
     rowIndex: number,
     spriteNames: string[]
 }
 
-export interface SerializedTickResult {
+export type SerializedTickResult = {
     changedCells: CellishJson[]
     soundToPlay: Optional<number>
     messageToShow: Optional<string>
@@ -368,7 +368,7 @@ export type WorkerResponse = {
     a11yMessages: Array<A11Y_MESSAGE<CellishJson, string>>
 }
 
-export interface PuzzlescriptWorker {
+export type PuzzlescriptWorker = {
     postMessage(msg: WorkerMessage, transferrables?: Transferable[]): void
     addEventListener(type: 'message', handler: (msg: {data: WorkerResponse}) => void): void
 }
@@ -383,7 +383,7 @@ export const shouldTick = (metadata: GameMetadata, lastTick: number) => {
 }
 
 // This interface is so the WebWorker does not have to instantiate Cells just to render to the screen
-export interface Cellish {
+export type Cellish = {
     colIndex: number
     rowIndex: number
     getSprites(): GameSprite[]
@@ -391,7 +391,7 @@ export interface Cellish {
     getWantsToMove(sprite: GameSprite): Optional<RULE_DIRECTION>
 }
 
-export interface GameEngineHandler {
+export type GameEngineHandler = {
     onGameChange(gameData: GameData): void
     onPress(dir: INPUT_BUTTON): void
     onMessage(msg: string): Promise<void>
@@ -405,7 +405,7 @@ export interface GameEngineHandler {
     // onGameChange(data: GameData): void
 }
 
-export interface GameEngineHandlerOptional {
+export type GameEngineHandlerOptional = {
     onGameChange?(gameData: GameData): void
     onPress?(dir: INPUT_BUTTON): void
     onMessage?(msg: string): Promise<void>
@@ -424,22 +424,22 @@ export class EmptyGameEngineHandler implements GameEngineHandler {
     constructor(subHandlers?: GameEngineHandlerOptional[]) {
         this.subHandlers = subHandlers || []
     }
-    public onGameChange(gameData: GameData) { for (const h of this.subHandlers) { h.onGameChange && h.onGameChange(gameData) } }
-    public onPress(dir: INPUT_BUTTON) { for (const h of this.subHandlers) { h.onPress && h.onPress(dir) } }
-    public async onMessage(msg: string) { for (const h of this.subHandlers) { h.onMessage && await h.onMessage(msg) } }
-    public onLevelLoad(level: number, newLevelSize: Optional<{rows: number, cols: number}>) { for (const h of this.subHandlers) { h.onLevelLoad && h.onLevelLoad(level, newLevelSize) } }
-    public onLevelChange(level: number, cells: Optional<Cellish[][]>, message: Optional<string>) { for (const h of this.subHandlers) { h.onLevelChange && h.onLevelChange(level, cells, message) } }
-    public onWin() { for (const h of this.subHandlers) { h.onWin && h.onWin() } }
-    public async onSound(sound: Soundish) { for (const h of this.subHandlers) { h.onSound && h.onSound(sound) } }
+    public onGameChange(gameData: GameData) { for (const h of this.subHandlers) { h.onGameChange?.(gameData) } }
+    public onPress(dir: INPUT_BUTTON) { for (const h of this.subHandlers) { h.onPress?.(dir) } }
+    public async onMessage(msg: string) { for (const h of this.subHandlers) { await h.onMessage?.(msg) } }
+    public onLevelLoad(level: number, newLevelSize: Optional<{rows: number, cols: number}>) { for (const h of this.subHandlers) { h.onLevelLoad?.(level, newLevelSize) } }
+    public onLevelChange(level: number, cells: Optional<Cellish[][]>, message: Optional<string>) { for (const h of this.subHandlers) { h.onLevelChange?.(level, cells, message) } }
+    public onWin() { for (const h of this.subHandlers) { h.onWin?.() } }
+    public async onSound(sound: Soundish) { for (const h of this.subHandlers) { h.onSound?.(sound) } }
     public onTick(changedCells: Set<Cellish>, checkpoint: Optional<CellSaveState>, hasAgain: boolean, a11yMessages: Array<A11Y_MESSAGE<Cellish, GameSprite>>) {
-        for (const h of this.subHandlers) { h.onTick && h.onTick(changedCells, checkpoint, hasAgain, a11yMessages) }
+        for (const h of this.subHandlers) { h.onTick?.(changedCells, checkpoint, hasAgain, a11yMessages) }
     }
-    public onPause() { for (const h of this.subHandlers) { h.onPause && h.onPause() } }
-    public onResume() { for (const h of this.subHandlers) { h.onResume && h.onResume() } }
-    // public onGameChange(data: GameData) { this.subHandlers.forEach(h => h.onGameChange && h.onGameChange(data)) }
+    public onPause() { for (const h of this.subHandlers) { h.onPause?.() } }
+    public onResume() { for (const h of this.subHandlers) { h.onResume?.() } }
+    // public onGameChange(data: GameData) { this.subHandlers.forEach(h => h.onGameChange?.(data)) }
 }
 
-export interface Engineish {
+export type Engineish = {
     setGame(code: string, level: number, checkpoint: Optional<CellSaveState>): void
     dispose(): void
     pause?(): void

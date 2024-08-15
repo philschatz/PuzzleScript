@@ -113,11 +113,11 @@ window.addEventListener('load', () => {
         btnAdd.classList.remove('hidden')
     })
 
-    btnAdd.addEventListener('click', (e) => {
+    btnAdd.addEventListener('click', () => {
         btnAdd.classList.add('hidden')
-        deferredPrompt && deferredPrompt.prompt()
+        deferredPrompt?.prompt()
         // Wait for the user to respond to the prompt
-        deferredPrompt && deferredPrompt.userChoice
+        deferredPrompt?.userChoice
         .then(() => {
             deferredPrompt = null
         })

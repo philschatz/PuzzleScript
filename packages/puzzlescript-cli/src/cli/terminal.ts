@@ -88,7 +88,7 @@ class TerminalUI extends BaseUI implements GameEngineHandler {
         this.debugCategoryMessages = []
         this.resizeHandler = null
         this.setSmallTerminal(false) // use really big (but cleaner) characters
-        this.hasVisualUi = supportsColor.stdout
+        this.hasVisualUi = !!supportsColor.stdout
 
         // This is the "inspector" cursor that allows a11y
         this.inspectorCol = 0
@@ -479,10 +479,10 @@ class TerminalUI extends BaseUI implements GameEngineHandler {
         return ret.join('')
     }
 
-    protected drawCellsAfterRecentering(cells: Iterable<Cellish>, renderScreenDepth: number) {
+    protected drawCellsAfterRecentering(cells: Iterable<Cellish>) {
         const ret = []
         for (const cell of cells) {
-            const instructions = this._drawCell(cell, renderScreenDepth)
+            const instructions = this._drawCell(cell)
             if (instructions) {
                 ret.push(instructions)
             }
@@ -520,7 +520,7 @@ class TerminalUI extends BaseUI implements GameEngineHandler {
         process.stdout.write(getRestoreCursor())
     }
 
-    private _drawCell(cell: Cellish, renderScreenDepth: number = 0) {
+    private _drawCell(cell: Cellish) {
         const ret: string[] = []
         if (!this.gameData) {
             throw new Error(`BUG: gameData was not set yet`)

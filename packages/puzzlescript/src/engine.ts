@@ -9,12 +9,12 @@ import { Comparator } from './sortedList'
 import { SpriteBitSet } from './spriteBitSet'
 import { _flatten, Cellish, GameEngineHandler, INPUT_BUTTON, Optional, resetRandomSeed, RULE_DIRECTION, setAddAll, setDifference, setEquals } from './util'
 
-interface ICollisionLayerState {
+type ICollisionLayerState = {
     readonly wantsToMove: Optional<RULE_DIRECTION>
     readonly sprite: GameSprite
 }
 
-interface ITickResult {
+type ITickResult = {
     changedCells: Set<Cell>,
     didWinGame: boolean,
     didLevelChange: boolean,
@@ -273,8 +273,8 @@ export class Cell implements Cellish {
         this.addSprites(spritesToAdd)
     }
     // This method is replaced by LetterCells (because they are not boud to a level)
-    protected replaceSpriteInLevel(cellSprite: Optional<GameSprite>, newSprite: GameSprite) {
-        this.getLevel().replaceSprite(this, cellSprite, newSprite)
+    protected replaceSpriteInLevel(cellSprite: Optional<GameSprite>, newSprite: GameSprite) { //eslint-disable-line @typescript-eslint/no-unused-vars
+        this.getLevel().replaceSprite(this)
     }
     private _setState(collisionLayer: CollisionLayer, sprite: Optional<GameSprite>, wantsToMove: Optional<RULE_DIRECTION>) {
         let needsToUpdateCache
@@ -353,7 +353,7 @@ export class Level {
         // Skip error checks for performance
         return this.getCells()[rowIndex][colIndex]
     }
-    public replaceSprite(cell: Cell, oldSprite: Optional<GameSprite>, newSprite: Optional<GameSprite>) {
+    public replaceSprite(cell: Cell) {
         // When a new Cell is instantiated it will call this method but `this.cells` is not defined yet
         if (this.cells) {
             // Invalidate the row/column cache. It will be rebuilt when requested
@@ -614,7 +614,7 @@ export class LevelEngine extends EventEmitter2 {
                         case RULE_DIRECTION.UP:
                         case RULE_DIRECTION.DOWN:
                         case RULE_DIRECTION.LEFT:
-                        case RULE_DIRECTION.RIGHT:
+                        case RULE_DIRECTION.RIGHT: {
                             const neighbor = cell.getNeighbor(wantsToMove)
                             // Make sure
                             if (neighbor && !neighbor.hasCollisionWithSprite(sprite)) {
@@ -633,7 +633,7 @@ export class LevelEngine extends EventEmitter2 {
                                 // cell.clearWantsToMove(sprite)
                             }
                             break
-                        default:
+                        } default:
                             throw new Error(`BUG: wantsToMove should have been handled earlier: ${wantsToMove}`)
                     }
                 }
@@ -919,7 +919,7 @@ export class LevelEngine extends EventEmitter2 {
     }
 }
 
-export interface ILoadingCellsEvent {
+export type ILoadingCellsEvent = {
     cellStart: number,
     cellEnd: number,
     cellTotal: number,

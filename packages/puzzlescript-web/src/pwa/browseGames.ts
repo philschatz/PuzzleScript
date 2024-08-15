@@ -41,7 +41,7 @@ const browseGamesList = getElement('#browseGamesList')
 
 function createEl(tagName: string, classes: Optional<string[]>, attributes?: Optional<{[key: string]: string}>, children?: Array<Element | string | null>) {
     const el = document.createElement(tagName)
-    classes && classes.forEach((cls) => el.classList.add(cls))
+    classes?.forEach((cls) => el.classList.add(cls))
     if (attributes) {
         for (const key of Object.keys(attributes)) {
             el.setAttribute(key, attributes[key])

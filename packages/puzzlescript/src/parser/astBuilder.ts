@@ -270,8 +270,7 @@ export class AstBuilder {
                 if (!this.soundCacheHas(node.sound)) {
                     return null
                 }
-                const sound = this.soundCacheGet(node.sound)
-                return { ...node, sound }
+                return { ...node, sound: this.soundCacheGet(node.sound) }
             case ast.COMMAND_TYPE.AGAIN:
             case ast.COMMAND_TYPE.CANCEL:
             case ast.COMMAND_TYPE.MESSAGE:
@@ -582,14 +581,14 @@ export class AstBuilder {
 
     private bracket_clone(node: ast.Bracket<AST_Neighbor>, direction: RULE_DIRECTION, nameToExpand: Optional<ast.RULE_MODIFIER>, newName: Optional<RULE_DIRECTION>): ast.Bracket<AST_Neighbor> {
         switch (node.type) {
-            case ast.BRACKET_TYPE.SIMPLE:
+            case ast.BRACKET_TYPE.SIMPLE: {
                 const neighbors = node.neighbors.map((n) => this.neighbor_clone(n, direction, nameToExpand, newName))
                 return { ...node, neighbors }
-            case ast.BRACKET_TYPE.ELLIPSIS:
+            } case ast.BRACKET_TYPE.ELLIPSIS: {
                 const beforeNeighbors = node.beforeNeighbors.map((n) => this.neighbor_clone(n, direction, nameToExpand, newName))
                 const afterNeighbors = node.afterNeighbors.map((n) => this.neighbor_clone(n, direction, nameToExpand, newName))
                 return { ...node, beforeNeighbors, afterNeighbors }
-            default:
+            } default:
                 throw new Error(`Unsupported type ${node}`)
         }
     }
@@ -604,8 +603,7 @@ export class AstBuilder {
             case RULE_DIRECTION_RELATIVE.RELATIVE_DOWN:
             case RULE_DIRECTION_RELATIVE.RELATIVE_LEFT:
             case RULE_DIRECTION_RELATIVE.RELATIVE_RIGHT:
-                const modifier = relativeDirectionToAbsolute(direction, node.direction)
-                return { ...node, direction: modifier }
+                return { ...node, direction: relativeDirectionToAbsolute(direction, node.direction) }
             case nameToExpand:
                 return { ...node, direction: newName }
             case RULE_DIRECTION.UP:
@@ -629,14 +627,14 @@ export class AstBuilder {
 
         const source = this.toSource(node)
         switch (node.type) {
-            case ast.BRACKET_TYPE.SIMPLE:
+            case ast.BRACKET_TYPE.SIMPLE: {
                 const neighbors = node.neighbors.map((x) => this.neighbor_toSimple(x, neighborCache, tileCache))
                 return cacheSetAndGet(bracketCache, new SimpleBracket(source, direction, neighbors, node.debugFlag))
-            case ast.BRACKET_TYPE.ELLIPSIS:
+            } case ast.BRACKET_TYPE.ELLIPSIS: {
                 const beforeEllipsis = node.beforeNeighbors.map((x) => this.neighbor_toSimple(x, neighborCache, tileCache))
                 const afterEllipsis = node.afterNeighbors.map((x) => this.neighbor_toSimple(x, neighborCache, tileCache))
                 return cacheSetAndGet(bracketCache, new SimpleEllipsisBracket(source, direction, beforeEllipsis, afterEllipsis, node.debugFlag))
-            default:
+            } default:
                 throw new Error(`Unsupported type ${node}`)
         }
     }
