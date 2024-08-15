@@ -217,7 +217,7 @@ class TableUI extends BaseUI implements GameEngineHandler {
         super.clearScreen()
         // clear all the rows
         const tbody = this.table.querySelector('tbody')
-        tbody && tbody.remove()
+        tbody?.remove()
         this.liveLog.innerHTML = ''
         this.tableCells = []
     }

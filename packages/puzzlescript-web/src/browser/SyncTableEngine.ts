@@ -62,7 +62,7 @@ class SubTableEngine {
         const runLoop = async() => {
             const pendingKey = this.inputWatcher.pollControls()
             if (pendingKey) {
-                this.engine && this.engine.press(pendingKey)
+                this.engine?.press(pendingKey)
             }
             await this.getEngine().tick()
             this.timer = window.requestAnimationFrame(runLoop)
@@ -139,7 +139,7 @@ export default class SyncTableEngine implements Engineish {
         if (!this.subEngine.getEngine().isCurrentLevelAMessage()) {
             this.table.setAttribute('style', `width: ${width}px`)
             // to fix chrome vertical lines because of fractional pixels
-            this.table.parentElement && this.table.parentElement.setAttribute('style', `left: ${left}px; /*chrome display quirk with fractional pixels*/`)
+            this.table.parentElement?.setAttribute('style', `left: ${left}px; /*chrome display quirk with fractional pixels*/`)
             document.body.setAttribute('data-ps-game-limited-by', limitedBy)
         }
     }

@@ -424,19 +424,19 @@ export class EmptyGameEngineHandler implements GameEngineHandler {
     constructor(subHandlers?: GameEngineHandlerOptional[]) {
         this.subHandlers = subHandlers || []
     }
-    public onGameChange(gameData: GameData) { for (const h of this.subHandlers) { h.onGameChange && h.onGameChange(gameData) } }
-    public onPress(dir: INPUT_BUTTON) { for (const h of this.subHandlers) { h.onPress && h.onPress(dir) } }
-    public async onMessage(msg: string) { for (const h of this.subHandlers) { h.onMessage && await h.onMessage(msg) } }
-    public onLevelLoad(level: number, newLevelSize: Optional<{rows: number, cols: number}>) { for (const h of this.subHandlers) { h.onLevelLoad && h.onLevelLoad(level, newLevelSize) } }
-    public onLevelChange(level: number, cells: Optional<Cellish[][]>, message: Optional<string>) { for (const h of this.subHandlers) { h.onLevelChange && h.onLevelChange(level, cells, message) } }
-    public onWin() { for (const h of this.subHandlers) { h.onWin && h.onWin() } }
-    public async onSound(sound: Soundish) { for (const h of this.subHandlers) { h.onSound && h.onSound(sound) } }
+    public onGameChange(gameData: GameData) { for (const h of this.subHandlers) { h.onGameChange?.(gameData) } }
+    public onPress(dir: INPUT_BUTTON) { for (const h of this.subHandlers) { h.onPress?.(dir) } }
+    public async onMessage(msg: string) { for (const h of this.subHandlers) { await h.onMessage?.(msg) } }
+    public onLevelLoad(level: number, newLevelSize: Optional<{rows: number, cols: number}>) { for (const h of this.subHandlers) { h.onLevelLoad?.(level, newLevelSize) } }
+    public onLevelChange(level: number, cells: Optional<Cellish[][]>, message: Optional<string>) { for (const h of this.subHandlers) { h.onLevelChange?.(level, cells, message) } }
+    public onWin() { for (const h of this.subHandlers) { h.onWin?.() } }
+    public async onSound(sound: Soundish) { for (const h of this.subHandlers) { h.onSound?.(sound) } }
     public onTick(changedCells: Set<Cellish>, checkpoint: Optional<CellSaveState>, hasAgain: boolean, a11yMessages: Array<A11Y_MESSAGE<Cellish, GameSprite>>) {
-        for (const h of this.subHandlers) { h.onTick && h.onTick(changedCells, checkpoint, hasAgain, a11yMessages) }
+        for (const h of this.subHandlers) { h.onTick?.(changedCells, checkpoint, hasAgain, a11yMessages) }
     }
-    public onPause() { for (const h of this.subHandlers) { h.onPause && h.onPause() } }
-    public onResume() { for (const h of this.subHandlers) { h.onResume && h.onResume() } }
-    // public onGameChange(data: GameData) { this.subHandlers.forEach(h => h.onGameChange && h.onGameChange(data)) }
+    public onPause() { for (const h of this.subHandlers) { h.onPause?.() } }
+    public onResume() { for (const h of this.subHandlers) { h.onResume?.() } }
+    // public onGameChange(data: GameData) { this.subHandlers.forEach(h => h.onGameChange?.(data)) }
 }
 
 export type Engineish = {

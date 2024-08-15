@@ -4,7 +4,7 @@ declare const ga: Optional<(a1: string, a2: string, a3?: string, a4?: string, a5
 
 export function sendAnalytics(a1: string, a2: string, a3?: string, a4?: string, a5?: string, a6?: number) {
     if (!window.localStorage.getItem('disableAnalytics')) {
-        ga && ga(a1, a2, a3, a4, a5, a6)
+        ga?.(a1, a2, a3, a4, a5, a6)
     }
 }
 

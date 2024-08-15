@@ -1,18 +1,14 @@
-const {RNG} = require('./rng')
-const {MakeRiff, FastBase64_Encode} = require('./riffwave')
-const {StreamAudioContext: AudioContext} = require('@descript/web-audio-js')
+const {RNG} = require('./rng') // eslint-disable-line @typescript-eslint/no-require-imports
+const {MakeRiff, FastBase64_Encode} = require('./riffwave') // eslint-disable-line @typescript-eslint/no-require-imports
+const {StreamAudioContext: AudioContext} = require('@descript/web-audio-js') // eslint-disable-line @typescript-eslint/no-require-imports
 
 let Speaker = null
 if (!process.env.CONTINUOUS_INTEGRATION && !process.env.CI) {
     try {
-        Speaker = require('speaker')
-    } catch (err) {
+        Speaker = require('speaker') // eslint-disable-line @typescript-eslint/no-require-imports
+    } catch (_err) { // eslint-disable-line @typescript-eslint/no-unused-vars
         // it's ok, we just won't use the speaker
     }
-}
-
-async function sleep(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms))
 }
 
 var SOUND_VOL = 0.25;
@@ -589,19 +585,6 @@ random,
 birdSound
 ];
 
-var generatorNames = [
-'pickupCoin',
-'laserShoot',
-'explosion',
-'powerUp',
-'hitHurt',
-'jump',
-'blipSelect',
-'pushSound',
-'random',
-'birdSound'
-];
-
 /*
 i like 9675111
 */
@@ -701,44 +684,7 @@ function generateFromSeed(seed) {
   SoundEffect.prototype.play = async function() {
 
 
-    // from https://mdn.github.io/webaudio-examples/audio-buffer/
-    // which is from https://developer.mozilla.org/en-US/docs/Web/API/AudioBuffer
-    function makeSilence() {
-        var channels = 2;
-        // Create an empty two second stereo buffer at the
-        // sample rate of the AudioContext
-        var frameCount = AUDIO_CONTEXT.sampleRate * 2.0;
-
-        var myArrayBuffer = AUDIO_CONTEXT.createBuffer(channels, frameCount, AUDIO_CONTEXT.sampleRate);
-
-
-        // Fill the buffer with white noise;
-        //just random values between -1.0 and 1.0
-        for (var channel = 0; channel < channels; channel++) {
-            // This gives us the actual array that contains the data
-            var nowBuffering = myArrayBuffer.getChannelData(channel);
-            for (var i = 0; i < frameCount; i++) {
-                // Math.random() is in [0; 1.0]
-                // audio needs to be in [-1.0; 1.0]
-                nowBuffering[i] = 0;
-            }
-        }
-
-        // // Get an AudioBufferSourceNode.
-        // // This is the AudioNode to use when we want to play an AudioBuffer
-        // var source = AUDIO_CONTEXT.createBufferSource();
-        // // set the buffer in the AudioBufferSourceNode
-        // source.buffer = myArrayBuffer;
-        // // connect the AudioBufferSourceNode to the
-        // // destination so we can hear the sound
-        // source.connect(AUDIO_CONTEXT.destination);
-        // // start the source playing
-        // source.start();
-
-        return myArrayBuffer
-    }
-
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         AUDIO_CONTEXT.decodeAudioData(this._decodedBuffer, (audioBuffer) => {
 
             var bufferNode = AUDIO_CONTEXT.createBufferSource()
@@ -828,7 +774,7 @@ window.console.log(psstring);*/
   var fperiod, period, fmaxperiod;
   var fslide, fdslide;
   var square_duty, square_slide;
-  var arp_mod, arp_time, arp_limit;
+  var arp_mod, arp_limit;
   repeat();  // First time through, this is a bit of a misnomer
 
   // Filter
@@ -886,8 +832,6 @@ window.console.log(psstring);*/
   var gain = 2.0 * ps.sound_vol;
   var gain = Math.exp(ps.sound_vol) - 1;
 
-  var num_clipped = 0;
-
   // ...end of initialization. Generate samples.
 
   var sample_sum = 0;
@@ -896,7 +840,6 @@ window.console.log(psstring);*/
 
   var buffer_i = 0;
   var buffer_length = Math.ceil(env_total_length / summands);
-  var buffer_complete = false;
 
   var sound;
   if (ps.sample_rate < SoundEffect.MIN_SAMPLE_RATE) {
@@ -924,8 +867,6 @@ window.console.log(psstring);*/
     fperiod *= fslide;
     if (fperiod > fmaxperiod) {
       fperiod = fmaxperiod;
-      if (ps.p_freq_limit > 0.0)
-        buffer_complete = true;
     }
 
     // Vibrato

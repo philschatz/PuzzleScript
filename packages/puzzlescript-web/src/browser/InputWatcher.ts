@@ -186,7 +186,7 @@ export default class InputWatcher {
     }
 
     private endTouchHoldInterval() {
-        this.touchHoldInterval && clearInterval(this.touchHoldInterval)
+        clearInterval(this.touchHoldInterval || 0)
         this.touchHoldInterval = null
     }
 

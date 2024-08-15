@@ -51,7 +51,7 @@ interface ICliOptions {
 const commander = new Command()
 
 // Use require instead of import so we can load JSON files
-const pkg: IPackage = require(PACKAGE_JSON_PATH) as IPackage // eslint-disable-line @typescript-eslint/no-var-requires
+const pkg: IPackage = require(PACKAGE_JSON_PATH) as IPackage // eslint-disable-line @typescript-eslint/no-require-imports
 
 
 if (!existsSync(SOLUTION_ROOT)) {

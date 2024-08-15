@@ -2,7 +2,7 @@
   "name": "root",
   "private": true,
   "scripts": {
-    "lint": "eslint --fix ./packages/puzzlescript/src/ ./packages/puzzlescript-cli/ ./packages/puzzlescript-web/src/",
+    "lint": "eslint --fix .",
     "bootstrap": "lerna bootstrap --force-local",
     "compile": "lerna run compile",
     "test": "lerna run test --stream",

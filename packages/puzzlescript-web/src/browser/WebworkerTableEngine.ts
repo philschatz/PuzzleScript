@@ -110,7 +110,7 @@ export default class WebworkerTableEngine implements Engineish {
 
     public pause() {
         this.worker.postMessage({ type: MESSAGE_TYPE.PAUSE })
-        this.inputInterval && clearInterval(this.inputInterval)
+        clearInterval(this.inputInterval)
         this.inputInterval = 0
     }
 
@@ -242,7 +242,7 @@ export default class WebworkerTableEngine implements Engineish {
         if (!this.isCurrentLevelAMessage()) {
             this.table.setAttribute('style', `width: ${width}px`)
             // to fix chrome vertical lines because of fractional pixels
-            this.table.parentElement && this.table.parentElement.setAttribute('style', `left: ${left}px; /*chrome display quirk with fractional pixels*/`)
+            this.table.parentElement?.setAttribute('style', `left: ${left}px; /*chrome display quirk with fractional pixels*/`)
             document.body.setAttribute('data-ps-game-limited-by', limitedBy)
         }
     }
