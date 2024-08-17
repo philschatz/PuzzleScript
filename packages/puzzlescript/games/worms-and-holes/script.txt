@@ -1,0 +1,531 @@
+title Worms and Holes
+author galactical
+homepage galacticalgames.com
+
+background_color #1a1a24
+text_color #F59CD5
+
+========
+OBJECTS
+========
+
+Background
+#0e0e12 #1a1a24 #333346 #535373 #8080a4 #a6a6bf #c1c1d2 #e6e6ec
+11111
+11111
+11111
+11111
+11111
+
+FloorU
+#0e0e12 #1a1a24 #333346 #535373 #8080a4 #a6a6bf #c1c1d2 #F59CD5 #e6e6ec
+..7..
+..7..
+..7..
+.....
+.....
+
+FloorR
+#0e0e12 #1a1a24 #333346 #535373 #8080a4 #a6a6bf #c1c1d2 #F59CD5 #e6e6ec
+.....
+.....
+..777
+.....
+.....
+
+FloorD
+#0e0e12 #1a1a24 #333346 #535373 #8080a4 #a6a6bf #c1c1d2 #F59CD5 #e6e6ec
+.....
+.....
+..7..
+..7..
+..7..
+
+FloorL
+#0e0e12 #1a1a24 #333346 #535373 #8080a4 #a6a6bf #c1c1d2 #F59CD5 #e6e6ec
+.....
+.....
+777..
+.....
+.....
+
+HeadU
+#0e0e12 #1a1a24 #333346 #535373 #8080a4 #a6a6bf #c1c1d2 #e6e6ec
+..7..
+..7..
+.777.
+.....
+.....
+
+HeadR
+#0e0e12 #1a1a24 #333346 #535373 #8080a4 #a6a6bf #c1c1d2 #e6e6ec
+.....
+..7..
+..777
+..7..
+.....
+
+HeadD
+#0e0e12 #1a1a24 #333346 #535373 #8080a4 #a6a6bf #c1c1d2 #e6e6ec
+.....
+.....
+.777.
+..7..
+..7..
+
+HeadL
+#0e0e12 #1a1a24 #333346 #535373 #8080a4 #a6a6bf #c1c1d2 #e6e6ec
+.....
+..7..
+777..
+..7..
+.....
+
+Wall
+#0e0e12 #1a1a24 #333346 #535373 #8080a4 #a6a6bf #c1c1d2 #e6e6ec
+22232
+33333
+23222
+33333
+22232
+
+Player
+Transparent
+
+PlayerU
+#0e0e12 #1a1a24 #333346 #535373 #8080a4 #a6a6bf #c1c1d2 #e6e6ec
+.444.
+.444.
+44444
+.444.
+.4.4.
+
+PlayerR
+#0e0e12 #1a1a24 #333346 #535373 #8080a4 #a6a6bf #c1c1d2 #e6e6ec
+..4..
+44444
+.4444
+44444
+..4..
+
+PlayerD
+#0e0e12 #1a1a24 #333346 #535373 #8080a4 #a6a6bf #c1c1d2 #e6e6ec
+.4.4.
+.444.
+44444
+.444.
+.444.
+
+PlayerL
+#0e0e12 #1a1a24 #333346 #535373 #8080a4 #a6a6bf #c1c1d2 #e6e6ec
+..4..
+44444
+4444.
+44444
+..4..
+
+Crate
+#0e0e12 #1a1a24 #333346 #535373 #8080a4 #a6a6bf #c1c1d2 #e6e6ec
+55555
+53335
+53335
+53335
+55555
+
+CrateU
+#0e0e12 #1a1a24 #333346 #535373 #8080a4 #a6a6bf #c1c1d2 #F59CD5 #e6e6ec
+..7..
+..7..
+..7..
+.....
+.....
+
+CrateR
+#0e0e12 #1a1a24 #333346 #535373 #8080a4 #a6a6bf #c1c1d2 #F59CD5 #e6e6ec
+.....
+.....
+..777
+.....
+.....
+
+CrateD
+#0e0e12 #1a1a24 #333346 #535373 #8080a4 #a6a6bf #c1c1d2 #F59CD5 #e6e6ec
+.....
+.....
+..7..
+..7..
+..7..
+
+CrateL
+#0e0e12 #1a1a24 #333346 #535373 #8080a4 #a6a6bf #c1c1d2 #F59CD5 #e6e6ec
+.....
+.....
+777..
+.....
+.....
+
+PortalR
+#0e0e12 #1a1a24 #333346 #535373 #8080a4 #a6a6bf #c1c1d2 #F59CD5 #e6e6ec
+....7
+...78
+..788
+...78
+....7
+
+PortalD
+#0e0e12 #1a1a24 #333346 #535373 #8080a4 #a6a6bf #c1c1d2 #F59CD5 #e6e6ec
+.....
+.....
+..7..
+.787.
+78887
+
+OutsideR
+Transparent
+
+OutsideD
+Transparent
+
+Searched
+Purple
+
+DestroyFloor
+Transparent
+
+DestroyCrate
+Transparent
+
+ConfirmDestroy
+Transparent
+
+Searching
+Transparent
+
+Checkpoint1
+#0e0e12 #333346  #c1c1d2 #535373 #8080a4 #a6a6bf #c1c1d2 #F59CD5 #e6e6ec
+.....
+..2..
+.222.
+..2..
+.....
+
+FirstCheckpoint
+Transparent
+
+NoWorms
+Transparent
+
+=======
+LEGEND
+=======
+
+a = Background
+b = Wall
+c = Player and PlayerU and FirstCheckpoint
+
+d=FloorR and FloorL
+e=FloorU and FloorD
+
+f=FloorU and FloorR
+g=FloorR and FloorD
+h=FloorD and FloorL
+i=FloorL and FloorU
+
+j=Wall and FloorR and FloorL
+k=Wall and FloorU and FloorD
+
+l=Wall and FloorU and FloorR
+m=Wall and FloorR and FloorD
+n=Wall and FloorD and FloorL
+o=Wall and FloorL and FloorU
+
+p=Crate and CrateR and CrateL
+q=Crate and CrateU and CrateD
+
+r=Crate and CrateU and CrateR
+s=Crate and CrateR and CrateD
+t=Crate and CrateD and CrateL
+u=Crate and CrateL and CrateU
+
+w=HeadU
+x=HeadR
+y=HeadD
+z=HeadL
+
+1=PortalR and Crate
+2=PortalD and Crate
+(
+3=Crate
+)
+4=Checkpoint1
+5=Crate and CrateU and CrateR and CrateD and CrateL
+6=Wall and HeadU
+7=Wall and HeadR
+8=Wall and HeadD
+9=Wall and HeadL
+
+FloorWorm=FloorU or FloorR or FloorD or FloorL
+
+CrateWorm=CrateU or CrateR or CrateD or CrateL
+
+Head=HeadU or HeadR or HeadD or HeadL
+
+OnCrate=CrateWorm or PortalR or PortalD
+
+OnPlayer=PlayerU or PlayerR or PlayerD or PlayerL
+
+Portal=PortalR or PortalD
+
+Up1=FloorU or CrateU or HeadU
+Right1=FloorR or CrateR or HeadR
+Down1=FloorD or CrateD or HeadD
+Left1=FloorL or CrateL or HeadL
+
+Destroyable = Crate or Wall or FloorWorm or CrateWorm or Head
+
+=======
+SOUNDS
+=======
+
+Crate move 36772507
+Crate create 36772507
+Head Destroy 9296302
+
+sfx0 28776503
+sfx1 38314103
+sfx2 36772507
+sfx3 79743303
+
+================
+COLLISIONLAYERS
+================
+
+Background
+
+Wall
+FloorU
+FloorR
+FloorD
+FloorL
+HeadU
+HeadR
+HeadD
+HeadL
+
+Crate
+PortalR
+PortalD
+CrateU
+CrateR
+CrateD
+CrateL
+
+Player
+OnPlayer
+
+Searched
+Searching
+DestroyFloor
+DestroyCrate
+ConfirmDestroy
+OutsideR
+OutsideD
+Checkpoint1
+FirstCheckpoint
+
+NoWorms
+
+======
+RULES
+======
+
+(Portals)
+
+(Player)
+[OutsideR left Player PlayerU][OutsideD]->[OutsideR][OutsideD Player PlayerL] sfx3
+[OutsideR left Player PlayerL][OutsideD]->[OutsideR][OutsideD Player PlayerD] sfx3
+[OutsideR left Player PlayerD][OutsideD]->[OutsideR][OutsideD Player PlayerR] sfx3
+[OutsideR left Player PlayerR][OutsideD]->[OutsideR][OutsideD Player PlayerU] sfx3
+
+[OutsideD up Player PlayerU][OutsideR]->[OutsideD][OutsideR Player PlayerR] sfx3
+[OutsideD up Player PlayerR][OutsideR]->[OutsideD][OutsideR Player PlayerD] sfx3
+[OutsideD up Player PlayerD][OutsideR]->[OutsideD][OutsideR Player PlayerL] sfx3
+[OutsideD up Player PlayerL][OutsideR]->[OutsideD][OutsideR Player PlayerU] sfx3
+
+(Push crate after passing through a portal)
+right [OutsideR Player Crate OnCrate|no Wall no Crate]->[OutsideR Player > Crate > OnCrate|]
+down [OutsideD Player Crate OnCrate|no Wall no Crate]->[OutsideR Player > Crate > OnCrate|]
+
+(Crate moving through portal)
+left [> Player | OutsideR Crate OnCrate][OutsideD no Wall no Crate]->[> Player|OutsideR > Crate > OnCrate][OutsideD] sfx3
+left [> Player | OutsideR Crate][OutsideD no Wall no Crate]->[> Player|OutsideR > Crate][OutsideD] sfx3
+[left Crate OutsideR][OutsideD]->[OutsideR][OutsideD Crate] sfx3
+[left CrateU OutsideR][OutsideD]->[OutsideR][OutsideD CrateL] sfx3
+[left CrateL OutsideR][OutsideD]->[OutsideR][OutsideD CrateD] sfx3
+[left CrateD OutsideR][OutsideD]->[OutsideR][OutsideD CrateR] sfx3
+[left CrateR OutsideR][OutsideD]->[OutsideR][OutsideD CrateU] sfx3
+
+up [> Player | OutsideD Crate OnCrate][OutsideR no Wall no Crate]->[> Player|OutsideD > Crate > OnCrate][OutsideR] sfx3
+[up Crate OutsideD][OutsideR]->[OutsideD][OutsideR Crate] sfx3
+[up CrateU OutsideD][OutsideR]->[OutsideD][OutsideR CrateR] sfx3
+[up CrateL OutsideD][OutsideR]->[OutsideD][OutsideR CrateU] sfx3
+[up CrateD OutsideD][OutsideR]->[OutsideD][OutsideR CrateL] sfx3
+[up CrateR OutsideD][OutsideR]->[OutsideD][OutsideR CrateD] sfx3
+
+late [Player Crate]->cancel
+
+(Basic Movement)
+[> Player | Wall]->[Player | Wall]
+[> Player | Crate ] -> [ > Player | > Crate ]
+[> Crate | Crate]->[Crate | Crate]
+[> Crate | Wall]->[Crate | Wall]
+[> Player | stationary Crate]->[Player|Crate]
+
+[up Player OutsideD][OutsideR Wall]->[Player OutsideD][OutsideR Wall]
+[left Player OutsideR][OutsideD Wall]->[Player OutsideR][OutsideD Wall]
+
+(Move elements on player/crate)
+[> Crate OnCrate]->[> Crate > OnCrate]
+[> Player OnPlayer]->[> Player > OnPlayer]
+[> Portal stationary Crate]->[Portal Crate]
+
+[> Portal | Portal]->sfx2 cancel message Please don't do that
+
+[left PortalR]->cancel
+[up PortalD]->cancel
+
+late [Player Checkpoint1][FirstCheckpoint]->[Player Checkpoint1][]message Checkpoint.  Press R to restart from here
+
+late [Player Checkpoint1]->[Player] sfx1 checkpoint 
+
+late [OutsideR]->[]
+late [OutsideD]->[]
+late right [PortalR | no Wall]->[PortalR | OutsideR]
+late down [PortalD | no Wall]->[PortalD | OutsideD]
+
+(Portal head to head)
+late [HeadU OutsideD no Crate][HeadL OutsideR no Crate]->[DestroyFloor HeadU ConfirmDestroy OutsideD][DestroyFloor HeadL OutsideR]
+
+(Find completed worms)
+startloop
+
+(Start with random unsearched head)
+random late [Head no Searched no Crate no OutsideR no OutsideD]->[Head Searching DestroyFloor]
+late up [HeadU no Searched no OutsideR no OutsideD Searching | FloorD no Crate]->[HeadU Searching | FloorD DestroyFloor]
+late up [HeadU no Searched no OutsideR no OutsideD Searching | CrateD]->[HeadU Searching | CrateD DestroyCrate]
+late right [HeadR no Searched no OutsideR no OutsideD Searching | FloorL no Crate]->[HeadR Searching | FloorL DestroyFloor]
+late right [HeadR no Searched no OutsideR no OutsideD Searching | CrateL]->[HeadR Searching | CrateL DestroyCrate]
+late down [HeadD no Searched no OutsideR no OutsideD Searching | FloorU no Crate]->[HeadD Searching | FloorU DestroyFloor]
+late down [HeadD no Searched no OutsideR no OutsideD Searching | CrateU]->[HeadD Searching | CrateU DestroyCrate]
+late left [HeadL no Searched no OutsideR no OutsideD Searching | FloorR no Crate]->[HeadL Searching | FloorR DestroyFloor]
+late left [HeadL no Searched no OutsideR no OutsideD Searching | CrateR]->[HeadL Searching | CrateR DestroyCrate]
+
+late [Head Searching no Searched]->[Head Searching Searched DestroyFloor]
+
+(Floor to floor)
+late up [DestroyFloor FloorU | FloorD no Crate]->[DestroyFloor FloorU | DestroyFloor FloorD]
++late up [FloorU no Crate| DestroyFloor FloorD]->[DestroyFloor FloorU | DestroyFloor FloorD]
++late right [DestroyFloor FloorR | FloorL no Crate]->[DestroyFloor FloorR | DestroyFloor FloorL]
++late right [FloorR no Crate| DestroyFloor FloorL]->[DestroyFloor FloorR | DestroyFloor FloorL]
+
+(Crate to crate)
++late up [DestroyCrate CrateU | CrateD ]->[DestroyCrate CrateU | DestroyCrate CrateD]
++late up [ CrateU | DestroyCrate CrateD ]->[DestroyCrate CrateU | DestroyCrate CrateD]
++late right [ CrateR | DestroyCrate CrateL ]->[DestroyCrate CrateR | DestroyCrate CrateL]
++late right [ DestroyCrate CrateR | CrateL ]->[DestroyCrate CrateR | DestroyCrate CrateL]
+
+(Floor to crate)
++late up [DestroyFloor FloorU | CrateD]->[DestroyFloor FloorU | DestroyCrate CrateD]
++late up [CrateU| DestroyFloor FloorD]->[DestroyCrate CrateU | DestroyFloor FloorD]
++late right [DestroyFloor FloorR | CrateL]->[DestroyFloor FloorR | DestroyCrate CrateL]
++late right [CrateR| DestroyFloor FloorL]->[DestroyCrate CrateR | DestroyFloor FloorL]
+
+(Crate to floor)
++late up [DestroyCrate CrateU | FloorD no crate ]->[DestroyCrate CrateU | DestroyFloor FloorD]
++late up [ FloorU no Crate| DestroyCrate CrateD ]->[DestroyFloor FloorU | DestroyCrate CrateD]
++late right [ FloorR no Crate | DestroyCrate CrateL ]->[DestroyFloor FloorR | DestroyCrate CrateL]
++late right [ DestroyCrate CrateR | FloorL no Crate ]->[DestroyCrate CrateR | DestroyFloor FloorL]
+
+(Portal floor to floor)
++late[OutsideD FloorU no Crate DestroyFloor][OutsideR FloorL no Crate]->[OutsideD FloorU DestroyFloor][OutsideR FloorL DestroyFloor]
++late[OutsideD FloorU no Crate][OutsideR FloorL no Crate DestroyFloor]->[OutsideD FloorU DestroyFloor][OutsideR FloorL DestroyFloor]
+
+(Portal crate to crate)
++late[OutsideD CrateU DestroyCrate][OutsideR CrateL]->[OutsideD CrateU DestroyCrate][OutsideR CrateL DestroyCrate]
++late[OutsideD CrateU][OutsideR CrateL DestroyCrate]->[OutsideD CrateU DestroyCrate][OutsideR CrateL DestroyCrate]
+
+(Portal floor to crate)
++late[OutsideD FloorU no Crate DestroyFloor][OutsideR CrateL]->[OutsideD FloorU DestroyFloor][OutsideR CrateL DestroyCrate]
++late[OutsideD CrateU][OutsideR FloorL]->[OutsideD CrateU DestroyCrate][OutsideR FloorL DestroyFloor]
+
+(Portal crate to floor)
++late[OutsideD FloorU no Crate][OutsideR CrateL DestroyCrate]->[OutsideD FloorU DestroyFloor][OutsideR CrateL DestroyCrate]
++late[OutsideD CrateU DestroyCrate][OutsideR FloorL no Crate]->[OutsideD CrateU DestroyCrate][OutsideR FloorL DestroyFloor]
+
+(Need to connect to second head directly outside of portal)
+
+
+(Connect to second head)
+late up [HeadU no Searched no Crate| FloorD DestroyFloor]->[HeadU DestroyFloor ConfirmDestroy| FloorD DestroyFloor]
+late up [HeadU no Searched no Crate| CrateD DestroyCrate]->[HeadU DestroyFloor ConfirmDestroy| CrateD DestroyCrate]
+late right [HeadR no Searched no Crate| DestroyFloor FloorL no Crate]->[HeadR DestroyFloor ConfirmDestroy| FloorL DestroyFloor]
+late right [HeadR no Searched no Crate| DestroyCrate CrateL]->[HeadR DestroyFloor ConfirmDestroy| CrateL DestroyCrate]
+late down [HeadD no Searched no Crate| DestroyFloor FloorU no Crate]->[HeadD DestroyFloor ConfirmDestroy| FloorU DestroyFloor]
+late down [HeadD no Searched no Crate| DestroyCrate CrateU]->[HeadD DestroyFloor ConfirmDestroy| CrateU DestroyCrate]
+late left [HeadL no Searched no Crate| DestroyFloor FloorR no Crate]->[HeadL DestroyFloor ConfirmDestroy| FloorR DestroyFloor]
+late left [HeadL no Searched no Crate| DestroyCrate CrateR]->[HeadL DestroyFloor ConfirmDestroy| CrateR DestroyCrate]
+
+(Portal connect to second head)
+late [HeadU no Searched no Crate OutsideD][OutsideR FloorL DestroyFloor]->[HeadU OutsideD DestroyFloor ConfirmDestroy][OutsideR FloorL DestroyFloor]
+late [HeadU no Searched no Crate OutsideD][OutsideR CrateL DestroyCrate]->[HeadU OutsideD DestroyFloor ConfirmDestroy][OutsideR CrateL DestroyCrate]
+late [HeadL no Searched no Crate OutsideR][OutsideD CrateU DestroyCrate]->[HeadL OutsideR DestroyFloor ConfirmDestroy][OutsideD CrateU DestroyCrate]
+late [HeadL no Searched no Crate OutsideR][OutsideD FloorU DestroyFloor]->[HeadL OutsideR DestroyFloor ConfirmDestroy][OutsideD FloorU DestroyFloor]
+
+(Destroy connected)
+late [DestroyFloor FloorWorm][ConfirmDestroy]->[DestroyFloor][ConfirmDestroy]
+late [DestroyFloor Head][ConfirmDestroy]->[DestroyFloor][ConfirmDestroy]
+late [DestroyFloor Wall][ConfirmDestroy]->[DestroyFloor][ConfirmDestroy]
+late [DestroyCrate Crate][ConfirmDestroy]->[DestroyCrate][ConfirmDestroy]
+late [OnCrate no Crate]->[]
+
+late [DestroyFloor]->[]
+late [DestroyCrate]->[]
+late [ConfirmDestroy]->[]
+late [Searching]->[]
+endloop
+late [Searched]->[]
+
+late [NoWorms]->[]
+late [Player]->[Player NoWorms]
+late [FloorWorm][NoWorms]->[FloorWorm][]
+late [CrateWorm][NoWorms]->[CrateWorm][]
+
+down [|||||||||||||||> Player no NoWorms]->[|||||||||||||||Player] message You missed some worms, try again!
+
+down [|||||||||||||||> Player OnPlayer ]->[||||||||||||||| NoWorms] message Thanks for playing!
+
+
+==============
+WINCONDITIONS
+==============
+no Player
+=======
+LEVELS
+=======
+
+bbbbbbbbbbbbbbbbbbbbbbbbbb
+bmjjjjjjjjjjjnbbbbbbaybbbb
+bkbbbbbbbbbbbkbbbbbb2kbbbb
+bkbaaaabgdddnk88bbapyab7nb
+blhpqqagrdaz66aka4aaaeaakb
+bbfddddiazpabblobbaaeebaeb
+bbbbbbbbbb4abbbbbbaaewbueb
+bbbayabbbb8bbbbbbbbbkbbaeb
+bbbapaabagiaaaaababawabaeb
+bbbafqd9qabaasraba1apanreb
+bbbbaabbaeaaaatab47aaw6aeb
+bbbbabbbaaawauabbbbljjjjob
+bb7jaj9bbbbbbbbbaaaaaaaaab
+bbbbapaaabaaaaamixsqqraaab
+bbbbaabacbaaaaalzaaaaaaaab
+bbbbbbbbbbabbbbbbbbbbbbbbb
